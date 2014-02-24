@@ -4,3 +4,5 @@ bin/
 local/
 lib/
 include/
+build/
+sqlite3
