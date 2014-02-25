@@ -5,4 +5,5 @@ local/
 lib/
 include/
 build/
+tmp/
 sqlite3
