@@ -1,22 +1,15 @@
-import os
-
+# -*- coding: utf-8 -*-
+#:Progetto:  microweb -- flask
+#:Creato:    Tue 25 Feb 2014 18:39:18 AM CET
+#:Autore:    xavi <xavi@airpim.com>
+#:Licenza:   GNU General Public License version 3 or later
+#
 import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, \
+from flask import request, session, g, redirect, url_for, abort, \
      render_template, flash
 
-app = Flask(__name__)
-app.config.from_object(__name__)
-
-# Load default config and override config from an environment variable
-app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'microweb.db'),
-    DEBUG=True,
-    SECRET_KEY='$cippalippa!',
-    USERNAME='admin',
-    PASSWORD='admin'
-))
-
-app.config.from_envvar('MICROWEB_SETTINGS', silent=True)
+from microweb import app
+from forms import LoginForm
 
 def get_db():
     """Opens a new database connection if there is none yet for the
@@ -41,12 +34,30 @@ def connect_db():
     return rv
 
 
-@app.route('/')
+@app.route('/blog/<int:entry_id>')
+def show_entry(entry_id):
+    db = get_db()
+    cur = db.execute('select title, text from entries where entry_id = %s' % entry_id)
+    entries = cur.fetchall()
+    return render_template('show_entries.html', entries=entries)
+
+
+@app.route('/blog')
 def show_entries():
     db = get_db()
     cur = db.execute('select title, text from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
+
+
+@app.route('/')
+def main_page():
+    return render_template('index.html')
+
+
+@app.route('/<page_name>')
+def specific_page(page_name):
+    return render_template('%s' % page_name)
 
 
 @app.route('/add', methods=['POST'])
@@ -63,8 +74,9 @@ def add_entry():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    form = LoginForm()
     error = None
-    if request.method == 'POST':
+    if form.validate_on_submit():
         if request.form['username'] != app.config['USERNAME']:
             error = 'Invalid username'
         elif request.form['password'] != app.config['PASSWORD']:
@@ -73,7 +85,7 @@ def login():
             session['logged_in'] = True
             flash('You were logged in')
             return redirect(url_for('show_entries'))
-    return render_template('login.html', error=error)
+    return render_template('login.html', error=error, form=form)
 
 
 @app.route('/logout')
