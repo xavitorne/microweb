@@ -22,7 +22,7 @@ def show_page(entry_id):
 @app.route('/blog')
 def show_pages():
     pages = Page.query.all()
-    return render_template('show_pages.html', entries=pages)
+    return render_template('show_pages.html', pages=pages)
 
 
 @app.route('/')
@@ -44,7 +44,7 @@ def add_page():
          user_id=1)
     db.session.add(page)
     db.session.commit()
-    flash('New entry was successfully posted')
+    flash('New page was successfully posted')
     return redirect(url_for('show_pages'))
 
 

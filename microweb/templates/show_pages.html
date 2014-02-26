@@ -12,10 +12,10 @@
     </form>
   {% endif %}
   <ul class=entries>
-  {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
+  {% for page in pages %}
+    <li><h2>{{ page.title }}</h2>{{ page.text|safe }}
   {% else %}
-    <li><em>Unbelievable.  No entries here so far</em>
+    <li><em>Unbelievable.  No pages here so far</em>
   {% endfor %}
   </ul>
 {% endblock %}
