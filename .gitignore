@@ -7,3 +7,5 @@ include/
 build/
 tmp/
 sqlite3
+db_repository/
+microweb.db
