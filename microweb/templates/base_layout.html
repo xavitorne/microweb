@@ -10,11 +10,11 @@
     <title>Modern Business - Start Bootstrap Template</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/css/bootstrap.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
 
     <!-- Add custom CSS here -->
-    <link href="static/css/modern-business.css" rel="stylesheet">
-    <link href="static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/modern-business.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -105,9 +105,9 @@
     <!-- /.container -->
 
     <!-- JavaScript -->
-    <script src="static/js/jquery-1.10.2.js"></script>
-    <script src="static/js/bootstrap.js"></script>
-    <script src="static/js/modern-business.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-1.10.2.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modern-business.js') }}"></script>
 
 </body>
 
