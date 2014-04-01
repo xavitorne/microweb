@@ -22,7 +22,6 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-
 @app.route('/blog/<int:entry_id>')
 def show_page(entry_id):
     page = Page.query.get(entry_id)
@@ -50,6 +49,7 @@ def add_page():
         #return redirect(url_for('add_pages'))
     else:
         abort(401)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -86,6 +86,11 @@ def logout():
 @app.route('/')
 def main_page():
     return render_template('index.html')
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return redirect(url_for('static', filename='favicon.ico'))
 
 
 @app.route('/<page_name>')
