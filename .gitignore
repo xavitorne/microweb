@@ -10,3 +10,4 @@ sqlite3
 db_repository/
 microweb.db
 .emacs.*
+emacs.desktop
